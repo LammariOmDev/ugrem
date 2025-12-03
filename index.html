@@ -19,20 +19,21 @@
             margin: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* Changé pour permettre le scroll si besoin */
             min-height: 100vh;
+            padding: 10px;
         }
 
         .app-container {
             background: white;
-            width: 800px;
+            width: 100%;
+            max-width: 800px; /* Largeur max comme l'original */
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             border: 1px solid #ccc;
         }
 
-        /* Header Style */
+        /* Header Style identique V1 */
         .header {
-            background: white;
             padding: 15px 20px;
             display: flex;
             align-items: center;
@@ -43,7 +44,7 @@
 
         .title-group h1 {
             color: #005a9e;
-            font-size: 24px;
+            font-size: 22px; /* Un peu ajusté pour mobile */
             margin: 0;
             font-weight: 700;
         }
@@ -56,7 +57,7 @@
             font-style: italic;
         }
 
-        /* Blue Bar */
+        /* Blue Bar identique V1 */
         .blue-bar {
             background: var(--blue-bar);
             color: white;
@@ -71,34 +72,53 @@
             background: #004080;
             border: 1px solid #fff;
             color: white;
-            padding: 2px 10px;
+            padding: 4px 10px;
             cursor: pointer;
             border-radius: 4px;
             font-size: 12px;
         }
 
-        /* Main Content */
+        /* Layout Principal */
         .content {
             padding: 20px;
             background-color: #eee;
-            display: grid;
-            grid-template-columns: 2fr 1fr; /* Inputs à gauche, Résultats à droite */
+            display: flex;
+            flex-wrap: wrap; /* Permet le passage à la ligne sur mobile */
             gap: 20px;
         }
 
-        /* Input Grid */
-        .input-group {
-            display: grid;
-            grid-template-columns: auto 1fr;
+        .inputs-section {
+            flex: 2; /* Prend 2/3 de la largeur sur PC */
+            min-width: 300px; /* Ne devient pas trop petit */
+        }
+
+        .results-section {
+            flex: 1; /* Prend 1/3 de la largeur sur PC */
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
             gap: 15px;
+        }
+
+        /* Input Grid */
+        .input-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .input-group {
+            display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            gap: 10px;
+            flex: 1;
         }
 
         label {
             font-weight: 700;
             color: #003366;
-            min-width: 60px;
+            min-width: 50px;
+            white-space: nowrap;
         }
 
         input[type="number"] {
@@ -107,7 +127,7 @@
             color: #005a9e;
             border: 1px solid #ccc;
             text-align: center;
-            width: 100%;
+            width: 70%;
             font-weight: bold;
         }
         
@@ -126,44 +146,52 @@
         }
 
         .icon-swap {
-            text-align: center;
+            text-align: left;
+            padding-left: 60px; /* Alignement visuel */
             font-size: 20px;
             color: #4CAF50;
             cursor: pointer;
+            margin-bottom: 10px;
         }
 
-        /* Result Boxes */
-        .results-section {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
+        /* Result Boxes - Style identique V1 */
         .result-box {
             background: white;
             border: 1px solid #ccc;
-            padding: 5px;
+            padding: 10px;
         }
 
         .result-label {
             font-size: 12px;
             color: #003366;
             font-weight: bold;
-            margin-bottom: 2px;
+            margin-bottom: 5px;
         }
 
         .result-value {
-            font-size: 32px;
+            font-size: 38px; /* Grande taille comme sur la photo */
             font-weight: bold;
-            color: #4c8a00; /* Vert foncé */
+            color: #4c8a00;
             text-align: center;
             font-family: 'Segoe UI', sans-serif;
+            line-height: 1.2;
         }
 
-        /* Responsive */
-        @media (max-width: 600px) {
-            .app-container { width: 100%; }
-            .content { grid-template-columns: 1fr; }
+        /* Adaptation Mobile simple */
+        @media (max-width: 700px) {
+            .content {
+                flex-direction: column; /* Empile les blocs verticalement */
+            }
+            .inputs-section, .results-section {
+                width: 100%; /* Prend toute la largeur */
+                min-width: 0;
+            }
+            .input-row {
+                flex-direction: column; /* Empile les inputs UG/Fournisseur */
+                gap: 10px;
+            }
+            .title-group h1 { font-size: 18px; }
+            .icon-swap { text-align: center; padding: 0; transform: rotate(90deg); }
         }
     </style>
 </head>
@@ -172,10 +200,10 @@
     <div class="app-container">
         <div class="header">
             <div class="title-group" style="width:100%">
-                <h1>Advanced UG to Remise Converter & Simulator</h1>
-                <p>Version Web 1.0</p>
+                <h1>Advanced UG to Remise Converter</h1>
+                <p>by LammariOmDev - Version : 1.0.0 (Web)</p>
             </div>
-            <div style="font-size: 40px;">🧮</div>
+            <div style="font-size: 35px;">🧮</div>
         </div>
 
         <div class="blue-bar">
@@ -186,39 +214,39 @@
         <div class="content">
             <div class="inputs-section">
                 
-                <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 15px;">
-                    <div class="input-group" style="flex:1">
+                <div class="input-row">
+                    <div class="input-group">
                         <label>UG</label>
                         <div class="input-wrapper">
-                            <input type="number" id="ug" value="30.00" oninput="calculateFromUG()">
+                            <input type="number" inputmode="decimal" step="0.01" id="ug" value="30.00" oninput="calculateFromUG()">
                             <span class="suffix">%</span>
                         </div>
                     </div>
                     
-                    <div class="input-group" style="flex:1">
-                        <label>R. Fourn</label>
+                    <div class="input-group">
+                        <label>R/ Fourn</label>
                         <div class="input-wrapper">
-                            <input type="number" id="remise_frs" value="20.00" oninput="calculateTotals()">
+                            <input type="number" inputmode="decimal" step="0.01" id="remise_frs" value="20.00" oninput="calculateTotals()">
                             <span class="suffix">%</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="icon-swap" title="Calcul automatique">♻️</div>
+                <div class="icon-swap">♻️</div>
 
-                <div style="display: flex; gap: 20px; align-items: center; margin-top: 15px;">
-                    <div class="input-group" style="flex:1">
+                <div class="input-row">
+                    <div class="input-group">
                         <label>Remise</label>
                         <div class="input-wrapper">
-                            <input type="number" id="remise" value="23.08" oninput="calculateFromRemise()">
+                            <input type="number" inputmode="decimal" step="0.01" id="remise" value="23.08" oninput="calculateFromRemise()">
                             <span class="suffix">%</span>
                         </div>
                     </div>
 
-                    <div class="input-group" style="flex:1">
-                        <label>R. Labo</label>
+                    <div class="input-group">
+                        <label>R/ Labo</label>
                         <div class="input-wrapper">
-                            <input type="number" id="remise_labo" value="0.00" oninput="calculateTotals()">
+                            <input type="number" inputmode="decimal" step="0.01" id="remise_labo" value="0.00" oninput="calculateTotals()">
                             <span class="suffix">%</span>
                         </div>
                     </div>
@@ -240,7 +268,6 @@
     </div>
 
     <script>
-        // Récupération des éléments DOM
         const ugInput = document.getElementById('ug');
         const remiseInput = document.getElementById('remise');
         const frsInput = document.getElementById('remise_frs');
@@ -248,44 +275,49 @@
         const totalUgDisplay = document.getElementById('total_ug');
         const totalRemiseDisplay = document.getElementById('total_remise');
 
-        // Fonction 1: Quand on change l'UG
+        // Calcul 1 : UG vers Remise
         function calculateFromUG() {
-            let ug = parseFloat(ugInput.value) || 0;
-            // Formule: Remise = UG / (100 + UG)
-            let remise = (ug / (100 + ug)) * 100;
-            
-            // Mise à jour du champ Remise (limité à 2 décimales)
-            remiseInput.value = remise.toFixed(2);
-            
-            calculateTotals();
-        }
-
-        // Fonction 2: Quand on change la Remise
-        function calculateFromRemise() {
-            let remise = parseFloat(remiseInput.value) || 0;
-            // Formule: UG = Remise / (1 - Remise%)
-            // Attention: Remise est en %, donc on divise par 100 pour le calcul
-            let r_decimal = remise / 100;
-            
-            if (r_decimal >= 1) { // Protection division par zéro
-                ugInput.value = "Err";
+            let ug = parseFloat(ugInput.value);
+            if (isNaN(ug)) {
+                remiseInput.value = "";
+                calculateTotals();
                 return;
             }
-
-            let ug = (r_decimal / (1 - r_decimal)) * 100;
-            ugInput.value = ug.toFixed(2);
-
+            
+            // Formule: Remise = UG / (100 + UG)
+            let remise = (ug / (100 + ug)) * 100;
+            remiseInput.value = remise.toFixed(2);
             calculateTotals();
         }
 
-        // Fonction 3: Calculer les totaux
+        // Calcul 2 : Remise vers UG
+        function calculateFromRemise() {
+            let remise = parseFloat(remiseInput.value);
+            if (isNaN(remise)) {
+                ugInput.value = "";
+                calculateTotals();
+                return;
+            }
+            
+            let r_decimal = remise / 100;
+            if (r_decimal >= 1) { 
+                ugInput.value = "Err"; return; 
+            }
+
+            // Formule inverse
+            let ug = (r_decimal / (1 - r_decimal)) * 100;
+            ugInput.value = ug.toFixed(2);
+            calculateTotals();
+        }
+
+        // Calcul 3 : Totaux
         function calculateTotals() {
+            // On récupère les valeurs actuelles (même si vides = 0)
             let remiseBase = (parseFloat(remiseInput.value) || 0) / 100;
             let remiseFrs = (parseFloat(frsInput.value) || 0) / 100;
             let remiseLabo = (parseFloat(laboInput.value) || 0) / 100;
 
             // Calcul Remise Totale (Composée)
-            // Formule: 1 - ( (1-R1)*(1-R2)*(1-R3) )
             let totalRemiseDec = 1 - ( (1 - remiseBase) * (1 - remiseFrs) * (1 - remiseLabo) );
             let totalRemisePercent = totalRemiseDec * 100;
 
@@ -295,12 +327,8 @@
                 totalUgPercent = (totalRemiseDec / (1 - totalRemiseDec)) * 100;
             }
 
-            // Affichage
-            // On utilise parseFloat().toFixed(2) pour nettoyer les zéros inutiles si besoin, 
-            // ou juste toFixed(1) ou (2) selon la précision voulue. L'image montre 1 décimale pour le total.
-            
-            // Formatage intelligent: si c'est un entier, pas de décimale, sinon 1 ou 2.
-            // Ici je force à 1 ou 2 décimales pour correspondre à l'image (62.5)
+            // Affichage avec formatage propre
+            // Si c'est un nombre rond, pas de décimale, sinon jusqu'à 2
             totalRemiseDisplay.innerText = parseFloat(totalRemisePercent.toFixed(2)) + " %";
             totalUgDisplay.innerText = parseFloat(totalUgPercent.toFixed(2)) + " %";
         }
@@ -310,11 +338,10 @@
             remiseInput.value = "";
             frsInput.value = "";
             laboInput.value = "";
-            totalUgDisplay.innerText = "0 %";
-            totalRemiseDisplay.innerText = "0 %";
+            calculateTotals();
         }
 
-        // Initialisation au chargement
+        // Lancer le calcul au démarrage pour afficher les valeurs par défaut
         calculateTotals();
     </script>
 
