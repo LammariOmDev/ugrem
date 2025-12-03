@@ -220,15 +220,15 @@
     <div class="app-container">
         <div class="header">
             <div class="title-group" style="width:100%">
-                <h1>Advanced UG to Remise Converter Lite</h1>
-                <p>by LammariOmDev ©2025 - v1.0.12 (Web)</p>
+                <h1>Advanced UG to Remise Converter - Lite</h1>
+                <p>by LammariOmDev ©2025 - v1.0.13 (Web)</p>
             </div>
             <div style="font-size: 35px;">🧮</div>
         </div>
 
         <div class="blue-bar">
             <span>Conversions</span>
-            <button class="reset-btn" onclick="resetFields()">Vider les Champs ↺</button>
+            <button class="reset-btn" onclick="resetFields()">Vider les champs ↺</button>
         </div>
 
         <div class="content">
@@ -248,7 +248,7 @@
                 <div class="input-group" id="group-frs">
                     <label>R. Fourn</label>
                     <div class="input-wrapper">
-                        <input type="number" inputmode="decimal" step="0.01" id="remise_frs" value="20.00" oninput="calculateTotals()">
+                        <input type="number" inputmode="decimal" step="0.01" id="remise_frs" value="0.00" oninput="calculateTotals()">
                         <span class="suffix">%</span>
                     </div>
                 </div>
@@ -274,11 +274,11 @@
             <div class="results-section">
                 <div class="result-box">
                     <div class="result-label">UG Totale</div>
-                    <div class="result-value" id="total_ug">62.5 %</div>
+                    <div class="result-value" id="total_ug">30.01 %</div>
                 </div>
                 <div class="result-box">
                     <div class="result-label">Remise Totale</div>
-                    <div class="result-value" id="total_remise">38.5 %</div>
+                    <div class="result-value" id="total_remise">23.08 %</div>
                 </div>
             </div>
 
@@ -336,5 +336,3 @@
     </script>
 </body>
 </html>
-
-
