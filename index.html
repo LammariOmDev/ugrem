@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced UG to Remise Converter - by LammariOmDev</title>
+    <title>UG to Remise Converter Lite - by LammariOmDev</title>
     
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧮</text></svg>">
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
 
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -46,6 +46,13 @@
 
         .title-group h1 { color: #005a9e; font-size: 22px; margin: 0; font-weight: 700; }
         .title-group p { color: #005a9e; font-size: 12px; margin: 0; text-align: left; font-style: italic; }
+
+        /* Style pour ton nouveau logo image */
+        .header-logo {
+            height: 45px; /* Taille ajustée pour l'en-tête */
+            width: auto;
+            border-radius: 5px; /* Légèrement arrondi pour faire joli */
+        }
 
         /* Blue Bar */
         .blue-bar {
@@ -129,12 +136,10 @@
             width: 100%;
             font-weight: bold;
             box-sizing: border-box;
-            /* Changement de la couleur de sélection pour faire joli */
             selection-background-color: #005a9e;
             selection-color: white;
         }
         
-        /* Focus visible pour savoir où on est */
         input[type="number"]:focus {
             outline: 2px solid #2fa3f7;
             border-color: #005a9e;
@@ -228,9 +233,9 @@
         <div class="header">
             <div class="title-group" style="width:100%">
                 <h1>Advanced UG to Remise Converter - LITE</h1>
-                <p>by LammariOmDev ©2025 v1.0.15 (Web)</p>
+                <p>by LammariOmDev ©2025 - v1.0.20 (Web)</p>
             </div>
-            <div style="font-size: 35px;">🧮</div>
+            <img src="logo.jpg" alt="Logo Calculatrice" class="header-logo">
         </div>
 
         <div class="blue-bar">
@@ -338,44 +343,30 @@
         function resetFields() {
             ugInput.value = ""; remiseInput.value = ""; frsInput.value = ""; laboInput.value = "";
             calculateTotals();
-            // Remettre le focus sur UG après reset
             ugInput.focus();
         }
 
-        // --- GESTION NAVIGATION ENTREE ---
-
-        // Définition de l'ordre de navigation demandé
+        // --- NAVIGATION ---
         const navigationOrder = [ugInput, remiseInput, frsInput, laboInput];
-
         navigationOrder.forEach((input, index) => {
-            // 1. Ecouter la touche Entrée
             input.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') {
-                    e.preventDefault(); // Empêche comportement par défaut
-                    
-                    // Trouver l'index suivant (avec boucle au début si on est à la fin)
+                    e.preventDefault();
                     let nextIndex = (index + 1) % navigationOrder.length;
-                    let nextInput = navigationOrder[nextIndex];
-                    
-                    // Focus sur le suivant
-                    nextInput.focus();
+                    navigationOrder[nextIndex].focus();
                 }
             });
-
-            // 2. Sélectionner tout le texte lors du focus (pour écraser facilement)
             input.addEventListener('focus', function() {
                 this.select();
             });
         });
 
-        // Initialisation
         calculateTotals();
-        
-        // Focus sur UG au chargement de la page
         window.onload = function() {
             ugInput.focus();
         };
 
     </script>
 </body>
+
 </html>
