@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced UG to Remise Converter by LammariOmDev</title>
-	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧮</text></svg>">
+    <title>Advanced UG to Remise Converter - by LammariOmDev</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧮</text></svg>">
+
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -26,9 +28,8 @@
 
         .app-container {
             background: white;
-            /* ICI : Tu as demandé 70%, mais sur mobile il faut que ce soit plus large sinon c'est trop petit */
             width: 70%; 
-            min-width: 600px; /* Sur PC, on garde une taille minimum */
+            min-width: 600px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             border: 1px solid #ccc;
         }
@@ -67,23 +68,20 @@
             font-size: 12px;
         }
 
-        /* --- LAYOUT GRID PUISSANT --- */
+        /* --- LAYOUT GRID --- */
         .content {
             padding: 20px;
             background-color: #eee;
             display: grid;
             gap: 20px;
-            /* Définition des zones sur PC */
-            grid-template-areas: 
-                "inputs results";
-            grid-template-columns: 2fr 1fr; /* Inputs prennent 2/3, Résultats 1/3 */
+            grid-template-areas: "inputs results";
+            grid-template-columns: 2fr 1fr;
         }
 
         .inputs-section {
             grid-area: inputs;
             display: grid;
             gap: 15px;
-            /* Layout interne des inputs sur PC : 2 colonnes */
             grid-template-columns: 1fr 1fr; 
             grid-template-areas:
                 "area-ug   area-frs"
@@ -97,7 +95,6 @@
         #group-remise { grid-area: area-rem; }
         #group-labo { grid-area: area-labo; }
 
-        /* Les séparateurs sont cachés sur PC */
         .mobile-divider { display: none; }
 
         .results-section {
@@ -117,7 +114,7 @@
         label {
             font-weight: 700;
             color: #003366;
-            min-width: 60px; /* Largeur fixe pour alignement */
+            min-width: 60px;
             white-space: nowrap;
         }
 
@@ -131,7 +128,17 @@
             text-align: center;
             width: 100%;
             font-weight: bold;
-            box-sizing: border-box; /* Important pour que le padding ne casse pas la largeur */
+            box-sizing: border-box;
+            /* Changement de la couleur de sélection pour faire joli */
+            selection-background-color: #005a9e;
+            selection-color: white;
+        }
+        
+        /* Focus visible pour savoir où on est */
+        input[type="number"]:focus {
+            outline: 2px solid #2fa3f7;
+            border-color: #005a9e;
+            background-color: #f0f8ff;
         }
 
         .suffix {
@@ -148,7 +155,7 @@
             background: white;
             border: 1px solid #ccc;
             padding: 10px;
-            flex: 1; /* S'assure qu'ils prennent toute la hauteur dispo */
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -172,29 +179,28 @@
         /* --- MOBILE SPECIAL --- */
         @media (max-width: 700px) {
             .app-container {
-                width: 95%; /* Sur mobile, on reprend presque toute la largeur */
+                width: 95%; 
                 min-width: 0;
             }
 
             .content {
                 display: flex;
-                flex-direction: column; /* Tout s'empile verticalement */
+                flex-direction: column;
             }
 
             .inputs-section {
                 display: flex;
-                flex-direction: column; /* On casse la grille PC */
+                flex-direction: column;
                 gap: 15px;
             }
 
-            /* RE-ORDONNANCEMENT MAGIQUE ICI */
+            /* ORDRE MOBILE SPÉCIFIQUE */
             #group-ug     { order: 1; }
             #group-remise { order: 2; }
-            #div-sep-1    { order: 3; display: block; } /* Afficher le séparateur */
+            #div-sep-1    { order: 3; display: block; }
             #group-frs    { order: 4; }
             #group-labo   { order: 5; }
             
-            /* Les séparateurs */
             .mobile-divider {
                 display: block;
                 border: 0;
@@ -205,13 +211,13 @@
 
             .results-section {
                 margin-top: 10px;
-                border-top: 1px solid #ccc; /* Ligne avant les résultats */
+                border-top: 1px solid #ccc;
                 padding-top: 20px;
             }
 
             .result-box {
-                width: 100%; /* Pleine largeur */
-                min-height: 80px; /* Hauteur forcée pour être uniforme */
+                width: 100%;
+                min-height: 80px;
             }
         }
     </style>
@@ -221,25 +227,24 @@
     <div class="app-container">
         <div class="header">
             <div class="title-group" style="width:100%">
-                <h1>Advanced UG to Remise Converter - Lite</h1>
-                <p>by LammariOmDev ©2025 - v1.0.13 (Web)</p>
+                <h1>Advanced UG to Remise Converter - LITE</h1>
+                <p>by LammariOmDev ©2025 v1.0.15 (Web)</p>
             </div>
             <div style="font-size: 35px;">🧮</div>
         </div>
 
         <div class="blue-bar">
             <span>Conversions</span>
-            <button class="reset-btn" onclick="resetFields()">Vider les champs ↺</button>
+            <button class="reset-btn" onclick="resetFields()">Vider champs ↺</button>
         </div>
 
         <div class="content">
             
             <div class="inputs-section">
-                
                 <div class="input-group" id="group-ug">
                     <label>UG</label>
                     <div class="input-wrapper">
-                        <input type="number" inputmode="decimal" step="0.01" id="ug" value="30.00" oninput="calculateFromUG()">
+                        <input type="number" inputmode="decimal" step="0.01" id="ug" value="30.00" oninput="calculateFromUG()" enterkeyhint="next">
                         <span class="suffix">%</span>
                     </div>
                 </div>
@@ -249,7 +254,7 @@
                 <div class="input-group" id="group-frs">
                     <label>R. Fourn</label>
                     <div class="input-wrapper">
-                        <input type="number" inputmode="decimal" step="0.01" id="remise_frs" value="0.00" oninput="calculateTotals()">
+                        <input type="number" inputmode="decimal" step="0.01" id="remise_frs" value="20.00" oninput="calculateTotals()" enterkeyhint="next">
                         <span class="suffix">%</span>
                     </div>
                 </div>
@@ -257,7 +262,7 @@
                 <div class="input-group" id="group-remise">
                     <label>Remise</label>
                     <div class="input-wrapper">
-                        <input type="number" inputmode="decimal" step="0.01" id="remise" value="23.08" oninput="calculateFromRemise()">
+                        <input type="number" inputmode="decimal" step="0.01" id="remise" value="23.08" oninput="calculateFromRemise()" enterkeyhint="next">
                         <span class="suffix">%</span>
                     </div>
                 </div>
@@ -265,21 +270,20 @@
                 <div class="input-group" id="group-labo">
                     <label>R. Labo</label>
                     <div class="input-wrapper">
-                        <input type="number" inputmode="decimal" step="0.01" id="remise_labo" value="0.00" oninput="calculateTotals()">
+                        <input type="number" inputmode="decimal" step="0.01" id="remise_labo" value="0.00" oninput="calculateTotals()" enterkeyhint="done">
                         <span class="suffix">%</span>
                     </div>
                 </div>
-
             </div>
 
             <div class="results-section">
                 <div class="result-box">
                     <div class="result-label">UG Totale</div>
-                    <div class="result-value" id="total_ug">30.00 %</div>
+                    <div class="result-value" id="total_ug">62.5 %</div>
                 </div>
                 <div class="result-box">
                     <div class="result-label">Remise Totale</div>
-                    <div class="result-value" id="total_remise">23.08 %</div>
+                    <div class="result-value" id="total_remise">38.5 %</div>
                 </div>
             </div>
 
@@ -293,6 +297,8 @@
         const laboInput = document.getElementById('remise_labo');
         const totalUgDisplay = document.getElementById('total_ug');
         const totalRemiseDisplay = document.getElementById('total_remise');
+
+        // --- CALCULS ---
 
         function calculateFromUG() {
             let ug = parseFloat(ugInput.value);
@@ -332,9 +338,44 @@
         function resetFields() {
             ugInput.value = ""; remiseInput.value = ""; frsInput.value = ""; laboInput.value = "";
             calculateTotals();
+            // Remettre le focus sur UG après reset
+            ugInput.focus();
         }
+
+        // --- GESTION NAVIGATION ENTREE ---
+
+        // Définition de l'ordre de navigation demandé
+        const navigationOrder = [ugInput, remiseInput, frsInput, laboInput];
+
+        navigationOrder.forEach((input, index) => {
+            // 1. Ecouter la touche Entrée
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Empêche comportement par défaut
+                    
+                    // Trouver l'index suivant (avec boucle au début si on est à la fin)
+                    let nextIndex = (index + 1) % navigationOrder.length;
+                    let nextInput = navigationOrder[nextIndex];
+                    
+                    // Focus sur le suivant
+                    nextInput.focus();
+                }
+            });
+
+            // 2. Sélectionner tout le texte lors du focus (pour écraser facilement)
+            input.addEventListener('focus', function() {
+                this.select();
+            });
+        });
+
+        // Initialisation
         calculateTotals();
+        
+        // Focus sur UG au chargement de la page
+        window.onload = function() {
+            ugInput.focus();
+        };
+
     </script>
 </body>
 </html>
-
