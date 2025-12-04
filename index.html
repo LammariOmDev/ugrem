@@ -133,7 +133,7 @@
             color: #005a9e;
             border: 1px solid #ccc;
             text-align: center;
-            width: 100%;
+            width: 80%;
             font-weight: bold;
             box-sizing: border-box;
             selection-background-color: #005a9e;
@@ -249,7 +249,7 @@
                 <div class="input-group" id="group-ug">
                     <label>UG</label>
                     <div class="input-wrapper">
-                        <input type="number" inputmode="decimal" step="0.01" id="ug" value="30.00" oninput="calculateFromUG()" enterkeyhint="next">
+                        <input type="number" inputmode="decimal" step="1" id="ug" value="30.00" oninput="calculateFromUG()" enterkeyhint="next">
                         <span class="suffix">%</span>
                     </div>
                 </div>
@@ -259,7 +259,7 @@
                 <div class="input-group" id="group-frs">
                     <label>R. Fourn</label>
                     <div class="input-wrapper">
-                        <input type="number" inputmode="decimal" step="0.01" id="remise_frs" value="20.00" oninput="calculateTotals()" enterkeyhint="next">
+                        <input type="number" inputmode="decimal" step="0.01" id="remise_frs" value="0.00" oninput="calculateTotals()" enterkeyhint="next">
                         <span class="suffix">%</span>
                     </div>
                 </div>
@@ -284,11 +284,11 @@
             <div class="results-section">
                 <div class="result-box">
                     <div class="result-label">UG Totale</div>
-                    <div class="result-value" id="total_ug">62.5 %</div>
+                    <div class="result-value" id="total_ug">30.00 %</div>
                 </div>
                 <div class="result-box">
                     <div class="result-label">Remise Totale</div>
-                    <div class="result-value" id="total_remise">38.5 %</div>
+                    <div class="result-value" id="total_remise">23.08 %</div>
                 </div>
             </div>
 
