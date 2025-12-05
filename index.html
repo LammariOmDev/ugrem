@@ -32,7 +32,6 @@
             min-width: 600px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             border: 1px solid #ccc;
-            /* J'en profite pour arrondir aussi légèrement le conteneur principal */
             border-radius: 8px;
         }
 
@@ -44,7 +43,6 @@
             justify-content: space-between;
             border-bottom: 1px solid #ccc;
             background: linear-gradient(to bottom, #ffffff 0%, #f2f2f2 100%);
-            /* Arrondir les coins supérieurs du header pour suivre le conteneur */
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
         }
@@ -52,11 +50,10 @@
         .title-group h1 { color: #005a9e; font-size: 22px; margin: 0; font-weight: 700; }
         .title-group p { color: #005a9e; font-size: 12px; margin: 0; text-align: left; font-style: italic; }
 
-        /* Style pour ton nouveau logo image */
         .header-logo {
-            height: 45px; /* Taille ajustée pour l'en-tête */
+            height: 45px;
             width: auto;
-            border-radius: 5px; /* Légèrement arrondi pour faire joli */
+            border-radius: 5px;
         }
 
         /* Blue Bar */
@@ -88,7 +85,6 @@
             gap: 20px;
             grid-template-areas: "inputs results";
             grid-template-columns: 2fr 1fr;
-            /* Arrondir les coins inférieurs du contenu pour suivre le conteneur */
             border-bottom-left-radius: 8px;
             border-bottom-right-radius: 8px;
         }
@@ -146,15 +142,13 @@
             box-sizing: border-box;
             selection-background-color: #005a9e;
             selection-color: white;
-            /* --- AJOUT ICI --- */
-            border-radius: 6px; /* Arrondit les coins des champs */
+            border-radius: 6px;
         }
         
         input[type="number"]:focus {
             outline: 2px solid #2fa3f7;
             border-color: #005a9e;
             background-color: #f0f8ff;
-            /* Pas besoin de remettre border-radius ici, il est hérité */
         }
 
         .suffix {
@@ -170,12 +164,12 @@
         .result-box {
             background: white;
             border: 1px solid #ccc;
-            padding: 10px;
+            /* MODIFICATION ICI : Padding encore réduit à 5px */
+            padding: 5px;
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            /* J'arrondis aussi les boîtes de résultats pour la cohérence */
             border-radius: 6px;
         }
 
@@ -187,7 +181,8 @@
         }
 
         .result-value {
-            font-size: 38px;
+            /* MODIFICATION ICI : Taille encore réduite à 28px */
+            font-size: 28px;
             font-weight: bold;
             color: #4c8a00;
             text-align: center;
@@ -235,7 +230,8 @@
 
             .result-box {
                 width: 100%;
-                min-height: 80px;
+                /* Ajustement de la hauteur min sur mobile aussi */
+                min-height: 60px;
             }
         }
     </style>
@@ -246,7 +242,7 @@
         <div class="header">
             <div class="title-group" style="width:100%">
                 <h1>Advanced UG to Remise Converter - LITE</h1>
-                <p>©2025 by LammariOmDev® - v1.0.21 (Web)</p>
+                <p>©2025 by LammariOmDev® - v1.0.22 (Web)</p>
             </div>
             <img src="logo.jpg" alt="Logo Calculatrice" class="header-logo">
         </div>
