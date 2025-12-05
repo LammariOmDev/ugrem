@@ -32,6 +32,8 @@
             min-width: 600px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             border: 1px solid #ccc;
+            /* J'en profite pour arrondir aussi légèrement le conteneur principal */
+            border-radius: 8px;
         }
 
         /* Header */
@@ -42,6 +44,9 @@
             justify-content: space-between;
             border-bottom: 1px solid #ccc;
             background: linear-gradient(to bottom, #ffffff 0%, #f2f2f2 100%);
+            /* Arrondir les coins supérieurs du header pour suivre le conteneur */
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
         }
 
         .title-group h1 { color: #005a9e; font-size: 22px; margin: 0; font-weight: 700; }
@@ -83,6 +88,9 @@
             gap: 20px;
             grid-template-areas: "inputs results";
             grid-template-columns: 2fr 1fr;
+            /* Arrondir les coins inférieurs du contenu pour suivre le conteneur */
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
         }
 
         .inputs-section {
@@ -138,12 +146,15 @@
             box-sizing: border-box;
             selection-background-color: #005a9e;
             selection-color: white;
+            /* --- AJOUT ICI --- */
+            border-radius: 6px; /* Arrondit les coins des champs */
         }
         
         input[type="number"]:focus {
             outline: 2px solid #2fa3f7;
             border-color: #005a9e;
             background-color: #f0f8ff;
+            /* Pas besoin de remettre border-radius ici, il est hérité */
         }
 
         .suffix {
@@ -164,6 +175,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            /* J'arrondis aussi les boîtes de résultats pour la cohérence */
+            border-radius: 6px;
         }
 
         .result-label {
@@ -233,7 +246,7 @@
         <div class="header">
             <div class="title-group" style="width:100%">
                 <h1>Advanced UG to Remise Converter - LITE</h1>
-                <p>©2025 by LammariOmDev® - v1.0.20 (Web)</p>
+                <p>©2025 by LammariOmDev® - v1.0.21 (Web)</p>
             </div>
             <img src="logo.jpg" alt="Logo Calculatrice" class="header-logo">
         </div>
@@ -368,8 +381,4 @@
 
     </script>
 </body>
-
 </html>
-
-
-
