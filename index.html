@@ -3,265 +3,378 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Médicaments à Conditions Particulière - LammariOmDev®</title>
+    <title>UG to Remise Converter Lite - by LammariOmDev®</title>
     
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    
-    <link href="https://cdn.datatables.net/fixedheader/3.4.0/css/fixedHeader.bootstrap5.min.css" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { 
-            padding: 20px; 
-            background-color: #f8f9fa; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .container { 
-            background: white; 
-            padding: 30px; 
-            border-radius: 8px; 
-            box-shadow: 0 0 15px rgba(0,0,0,0.1); 
-            min-height: 80vh; 
+        :root {
+            --header-bg: linear-gradient(180deg, #dceefc 0%, #a4d3f7 100%);
+            --blue-bar: linear-gradient(180deg, #2fa3f7 0%, #0d6ac4 100%);
+            --bg-color: #f0f0f0;
         }
 
-        h1 { 
-            margin-bottom: 10px; 
-            color: #2c3e50; 
-            font-size: 26px; 
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-align: center; 
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 10px;
         }
 
-        hr.custom-line {
-            border: 0; 
-            height: 2px; 
-            background-color: #95a5a6 !important; 
-            opacity: 1 !important; 
-            width: 100%; 
-            margin-top: 5px;
-            margin-bottom: 15px;
-            box-shadow: 0 3px 5px rgba(0,0,0,0.2); 
+        .app-container {
+            background: white;
+            width: 70%; 
+            min-width: 600px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 1px solid #ccc;
+            border-radius: 8px;
         }
 
-        .signature {
-            font-size: 11px; 
-            color: #7f8c8d; 
-            margin-bottom: 25px; 
-            font-style: italic;
-            padding-bottom: 10px;
-            display: block; 
-            text-align: right; 
+        /* Header */
+        .header {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #ccc;
+            background: linear-gradient(to bottom, #ffffff 0%, #f2f2f2 100%);
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
         }
-        .signature a { color: inherit; text-decoration: none; font-weight: bold; transition: color 0.3s; }
-        .signature a:hover { color: #3498db; }
 
-        /* Champ de recherche */
-        .dataTables_filter input {
-            border: 2px solid #3498db !important; 
-            border-radius: 5px; padding: 5px 10px; background-color: #fcfcfc;
+        .title-group h1 { color: #005a9e; font-size: 22px; margin: 0; font-weight: 700; }
+        .title-group p { color: #005a9e; font-size: 12px; margin: 0; text-align: left; font-style: italic; }
+
+        .header-logo {
+            height: 45px;
+            width: auto;
+            border-radius: 5px;
         }
-        .dataTables_filter input:focus { box-shadow: 0 0 8px rgba(52, 152, 219, 0.4); outline: none; }
 
-        /* Alignements */
-        .dataTables_wrapper .row:first-child { flex-direction: row-reverse; }
-        .dataTables_filter { text-align: left !important; }
-        .dataTables_length { text-align: right !important; }
-        
-        /* Couleur de l'entête du tableau */
-        table.dataTable thead { background-color: #3498db; color: white; }
-        /* Correction pour que l'entête fixe garde la couleur */
-        table.dataTable.fixedHeader-floating thead { background-color: #3498db; color: white; }
-        
-        .dataTables_wrapper { font-size: 14px; margin-top: 10px; }
-        
-        #loading { font-size: 18px; color: #666; text-align: center; padding: 20px; }
-
-        /* --- STYLE DE LA MODALE (POP-UP) --- */
-        .modal-body {
-            white-space: pre-wrap; 
-            font-size: 15px;
-            line-height: 1.6;
-            color: #2c3e50;
-        }
-        .modal-header {
-            background-color: #3498db;
+        /* Blue Bar */
+        .blue-bar {
+            background: var(--blue-bar);
             color: white;
+            padding: 5px 15px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .btn-close {
-            filter: invert(1) grayscale(100%) brightness(200%); 
+
+        .reset-btn {
+            background: #004080;
+            border: 1px solid #fff;
+            color: white;
+            padding: 4px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* --- LAYOUT GRID --- */
+        .content {
+            padding: 20px;
+            background-color: #eee;
+            display: grid;
+            gap: 20px;
+            grid-template-areas: "inputs results";
+            grid-template-columns: 2fr 1fr;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .inputs-section {
+            grid-area: inputs;
+            display: grid;
+            gap: 15px;
+            grid-template-columns: 1fr 1fr; 
+            grid-template-areas:
+                "area-ug   area-frs"
+                "area-rem  area-labo";
+            align-items: center;
+        }
+
+        /* Assignation des zones */
+        #group-ug { grid-area: area-ug; }
+        #group-frs { grid-area: area-frs; }
+        #group-remise { grid-area: area-rem; }
+        #group-labo { grid-area: area-labo; }
+
+        .mobile-divider { display: none; }
+
+        .results-section {
+            grid-area: results;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Styles des Inputs */
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: 700;
+            color: #003366;
+            min-width: 60px;
+            white-space: nowrap;
+        }
+
+        .input-wrapper { position: relative; width: 100%; }
+
+        input[type="number"] {
+            padding: 8px;
+            font-size: 18px;
+            color: #005a9e;
+            border: 1px solid #ccc;
+            text-align: center;
+            width: 80%;
+            font-weight: bold;
+            box-sizing: border-box;
+            selection-background-color: #005a9e;
+            selection-color: white;
+            border-radius: 6px;
+        }
+        
+        input[type="number"]:focus {
+            outline: 2px solid #2fa3f7;
+            border-color: #005a9e;
+            background-color: #f0f8ff;
+        }
+
+        .suffix {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #005a9e;
+            font-weight: bold;
+        }
+
+        /* Result Boxes */
+        .result-box {
+            background: white;
+            border: 1px solid #ccc;
+            /* MODIFICATION ICI : Padding encore réduit à 5px */
+            padding: 5px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-radius: 6px;
+        }
+
+        .result-label {
+            font-size: 12px;
+            color: #003366;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            /* MODIFICATION ICI : Taille encore réduite à 28px */
+            font-size: 28px;
+            font-weight: bold;
+            color: #4c8a00;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        /* --- MOBILE SPECIAL --- */
+        @media (max-width: 700px) {
+            .app-container {
+                width: 95%; 
+                min-width: 0;
+            }
+
+            .content {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .inputs-section {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            /* ORDRE MOBILE SPÉCIFIQUE */
+            #group-ug     { order: 1; }
+            #group-remise { order: 2; }
+            #div-sep-1    { order: 3; display: block; }
+            #group-frs    { order: 4; }
+            #group-labo   { order: 5; }
+            
+            .mobile-divider {
+                display: block;
+                border: 0;
+                border-top: 1px solid #ccc;
+                margin: 5px 0;
+                width: 100%;
+            }
+
+            .results-section {
+                margin-top: 10px;
+                border-top: 1px solid #ccc;
+                padding-top: 20px;
+            }
+
+            .result-box {
+                width: 100%;
+                /* Ajustement de la hauteur min sur mobile aussi */
+                min-height: 60px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    
-    <h1 id="main-title">Médicaments à Conditions Particulière de Remboursement</h1>
-    <hr class="custom-line">
-    <div class="signature">©2025 by <a href="https://facebook.com/LammariOmDev" target="_blank">LammariOmDev®</a></div>
+    <div class="app-container">
+        <div class="header">
+            <div class="title-group" style="width:100%">
+                <h1>UG to Remise Converter - LITE</h1>
+                <p>©2025 by LammariOmDev® - v1.0.22 (Web)</p>
+            </div>
+            <img src="logo.jpg" alt="Logo Calculatrice" class="header-logo">
+        </div>
 
-    <div id="loading">
-        <div class="spinner-border text-primary" role="status"></div>
-        <br>Chargement des données...
+        <div class="blue-bar">
+            <span>Conversions</span>
+            <button class="reset-btn" onclick="resetFields()">Vider champs ↺</button>
+        </div>
+
+        <div class="content">
+            
+            <div class="inputs-section">
+                <div class="input-group" id="group-ug">
+                    <label>UG</label>
+                    <div class="input-wrapper">
+                        <input type="number" inputmode="decimal" step="1" id="ug" value="0.00" oninput="calculateFromUG()" enterkeyhint="next">
+                        <span class="suffix">%</span>
+                    </div>
+                </div>
+
+                <hr class="mobile-divider" id="div-sep-1">
+
+                <div class="input-group" id="group-frs">
+                    <label>R. Fourn</label>
+                    <div class="input-wrapper">
+                        <input type="number" inputmode="decimal" step="0.01" id="remise_frs" value="0.00" oninput="calculateTotals()" enterkeyhint="next">
+                        <span class="suffix">%</span>
+                    </div>
+                </div>
+
+                <div class="input-group" id="group-remise">
+                    <label>Remise</label>
+                    <div class="input-wrapper">
+                        <input type="number" inputmode="decimal" step="0.01" id="remise" value="0.00" oninput="calculateFromRemise()" enterkeyhint="next">
+                        <span class="suffix">%</span>
+                    </div>
+                </div>
+
+                <div class="input-group" id="group-labo">
+                    <label>R. Labo</label>
+                    <div class="input-wrapper">
+                        <input type="number" inputmode="decimal" step="0.01" id="remise_labo" value="0.00" oninput="calculateTotals()" enterkeyhint="done">
+                        <span class="suffix">%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-section">
+                <div class="result-box">
+                    <div class="result-label">UG Totale</div>
+                    <div class="result-value" id="total_ug">30.00 %</div>
+                </div>
+                <div class="result-box">
+                    <div class="result-label">Remise Totale</div>
+                    <div class="result-value" id="total_remise">23.08 %</div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <div class="table-responsive">
-        <table id="monTableau" class="table table-striped" style="width:100%; display:none;">
-            <thead>
-                <tr id="table-headers"></tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-        </table>
-    </div>
-</div>
+    <script>
+        const ugInput = document.getElementById('ug');
+        const remiseInput = document.getElementById('remise');
+        const frsInput = document.getElementById('remise_frs');
+        const laboInput = document.getElementById('remise_labo');
+        const totalUgDisplay = document.getElementById('total_ug');
+        const totalRemiseDisplay = document.getElementById('total_remise');
 
-<div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modal-title">Détails de la Condition</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="modal-content-body">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-      </div>
-    </div>
-  </div>
-</div>
+        // --- CALCULS ---
 
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
-
-<script src="https://cdn.datatables.net/fixedheader/3.4.0/js/dataTables.fixedHeader.min.js"></script>
-
-<script>
-    let tableInstance = null;
-    let myModal = null; 
-
-    window.onload = function() {
-        myModal = new bootstrap.Modal(document.getElementById('detailModal'));
-        loadExcel('cpr.xlsx');
-    };
-
-    async function loadExcel(file) {
-        document.getElementById('loading').style.display = 'block';
-        document.getElementById('monTableau').style.display = 'none';
-        
-        if ($.fn.DataTable.isDataTable('#monTableau')) {
-            $('#monTableau').DataTable().destroy();
-            $('#table-headers').empty(); 
-            $('#table-body').empty();    
+        function calculateFromUG() {
+            let ug = parseFloat(ugInput.value);
+            if (isNaN(ug)) { remiseInput.value = ""; calculateTotals(); return; }
+            let remise = (ug / (100 + ug)) * 100;
+            remiseInput.value = remise.toFixed(2);
+            calculateTotals();
         }
 
-        try {
-            const response = await fetch(file + '?t=' + new Date().getTime());
-            if (!response.ok) throw new Error("Fichier introuvable");
+        function calculateFromRemise() {
+            let remise = parseFloat(remiseInput.value);
+            if (isNaN(remise)) { ugInput.value = ""; calculateTotals(); return; }
+            let r_decimal = remise / 100;
+            if (r_decimal >= 1) { ugInput.value = "Err"; return; }
+            let ug = (r_decimal / (1 - r_decimal)) * 100;
+            ugInput.value = ug.toFixed(2);
+            calculateTotals();
+        }
 
-            const arrayBuffer = await response.arrayBuffer();
-            const data = new Uint8Array(arrayBuffer);
-            const workbook = XLSX.read(data, {type: 'array'});
-            const firstSheetName = workbook.SheetNames[0];
-            const worksheet = workbook.Sheets[firstSheetName];
-            
-            const jsonData = XLSX.utils.sheet_to_json(worksheet, {header: 1});
+        function calculateTotals() {
+            let remiseBase = (parseFloat(remiseInput.value) || 0) / 100;
+            let remiseFrs = (parseFloat(frsInput.value) || 0) / 100;
+            let remiseLabo = (parseFloat(laboInput.value) || 0) / 100;
 
-            if (jsonData.length > 0) {
-                const headers = jsonData[0];
-                const headerRow = document.getElementById('table-headers');
-                
-                headers.forEach(header => {
-                    const th = document.createElement('th');
-                    th.textContent = header || "-"; 
-                    headerRow.appendChild(th);
-                });
+            let totalRemiseDec = 1 - ( (1 - remiseBase) * (1 - remiseFrs) * (1 - remiseLabo) );
+            let totalRemisePercent = totalRemiseDec * 100;
 
-                const body = document.getElementById('table-body');
-                
-                for (let i = 1; i < jsonData.length; i++) {
-                    const rowData = jsonData[i];
-                    if (rowData.length > 0) {
-                        const tr = document.createElement('tr');
-                        let drugName = (rowData[0] !== undefined) ? String(rowData[0]) : "Médicament";
-                        
-                        headers.forEach((_, index) => { 
-                            const td = document.createElement('td');
-                            let cellContent = (rowData[index] !== undefined) ? String(rowData[index]) : "";
-                            let currentHeaderName = (headers[index] || "").toString().trim().toUpperCase();
-
-                            if ((currentHeaderName === "CPR" || currentHeaderName === "CONDITIONS") && cellContent.trim() !== "") {
-                                const btn = document.createElement('button');
-                                btn.className = 'btn btn-sm btn-info text-white'; 
-                                btn.textContent = 'Voir Détails';
-                                btn.style.borderRadius = '20px';
-                                btn.style.fontSize = '12px';
-                                btn.style.whiteSpace = 'nowrap'; 
-                                btn.onclick = function() {
-                                    document.getElementById('modal-content-body').innerText = cellContent;
-                                    document.getElementById('modal-title').innerText = "Condition(s) - " + drugName + " ...";
-                                    myModal.show();
-                                };
-                                td.appendChild(btn); 
-                            } else {
-                                td.textContent = cellContent; 
-                            }
-                            tr.appendChild(td);
-                        });
-                        body.appendChild(tr);
-                    }
-                }
-
-                tableInstance = $('#monTableau').DataTable({
-                    // 3. ACTIVATION DE L'OPTION FIXED HEADER
-                    fixedHeader: true,
-                    
-                    language: {
-                        processing:     "Traitement en cours...",
-                        search:         "Rechercher&nbsp;:",
-                        lengthMenu:     "Afficher : _MENU_  lignes",
-                        info:           "Affichage de _START_ à _END_ sur _TOTAL_ éléments",
-                        infoEmpty:      "Affichage de 0 à 0 sur 0 éléments",
-                        infoFiltered:   "(filtré de _MAX_ éléments au total)",
-                        loadingRecords: "Chargement en cours...",
-                        zeroRecords:    "Aucun élément à afficher",
-                        emptyTable:     "Aucune donnée disponible dans le tableau",
-                        paginate: {
-                            first:      "Premier",
-                            previous:   "Précédent",
-                            next:       "Suivant",
-                            last:       "Dernier"
-                        }
-                    },
-                    pageLength: 20, 
-                    lengthMenu: [10, 20, 50, 100], 
-                    order: [] 
-                });
-
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('monTableau').style.display = 'table';
-                
-                tableInstance.columns.adjust().draw();
-
-                setTimeout(function() {
-                    $('.dataTables_filter input').focus();
-                }, 100);
+            let totalUgPercent = 0;
+            if (totalRemiseDec < 1) {
+                totalUgPercent = (totalRemiseDec / (1 - totalRemiseDec)) * 100;
             }
 
-        } catch (error) {
-            console.error("Erreur:", error);
-            document.getElementById('loading').innerHTML = 
-                "<div class='alert alert-danger'>Erreur : Impossible de charger le fichier " + file + ".</div>";
+            totalRemiseDisplay.innerText = parseFloat(totalRemisePercent.toFixed(2)) + " %";
+            totalUgDisplay.innerText = parseFloat(totalUgPercent.toFixed(2)) + " %";
         }
-    }
-</script>
 
+        function resetFields() {
+            ugInput.value = ""; remiseInput.value = ""; frsInput.value = ""; laboInput.value = "";
+            calculateTotals();
+            ugInput.focus();
+        }
+
+        // --- NAVIGATION ---
+        const navigationOrder = [ugInput, remiseInput, frsInput, laboInput];
+        navigationOrder.forEach((input, index) => {
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    let nextIndex = (index + 1) % navigationOrder.length;
+                    navigationOrder[nextIndex].focus();
+                }
+            });
+            input.addEventListener('focus', function() {
+                this.select();
+            });
+        });
+
+        calculateTotals();
+        window.onload = function() {
+            ugInput.focus();
+        };
+
+    </script>
 </body>
 </html>
